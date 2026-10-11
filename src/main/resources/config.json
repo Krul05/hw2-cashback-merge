@@ -1,0 +1,10 @@
+{
+  "spawnRules": [
+    { "cashback": "1", "probability": "0.85" },
+    { "cashback": "2", "probability": "0.15" }
+  ],
+  "sizeOfField": 4,
+  "movesLimit": 40,
+  "maxRewardCashback": "32",
+  "maxRewardAllowedRate": "0.20"
+}

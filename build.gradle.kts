@@ -60,6 +60,12 @@ dependencies {
     testImplementation(libs.bundles.testing)
     testRuntimeOnly(libs.junit.platform.launcher)
 
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
+
+    testCompileOnly(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
+
     // Раскомментируй, если понадобится:
     // testImplementation(platform(libs.mockito.bom))     // моки
     // testImplementation(libs.bundles.mockito)

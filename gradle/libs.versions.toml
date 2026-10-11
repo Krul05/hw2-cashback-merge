@@ -31,6 +31,8 @@ wiremock = "3.13.2"
 plugin-spotless = "8.10.0"
 plugin-errorprone = "5.1.0"
 
+lombok = "1.18.48"
+
 [libraries]
 # BOM согласует версии артефактов одного семейства.
 # Подключается как implementation(platform(libs.xxx.bom)).
@@ -66,6 +68,8 @@ wiremock = { module = "org.wiremock:wiremock", version.ref = "wiremock" }
 errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
 nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
 jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
+
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
 
 [bundles]
 jackson = ["jackson-databind", "jackson-datatype-jsr310", "jackson-module-parameter-names"]
