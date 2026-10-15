@@ -40,7 +40,7 @@ public class Field {
         for (int i = 0; i < sizeOfField; i++) {
             column[i] = cells[i][colIndex];
         }
-        return Arrays.copyOf(column, sizeOfField);
+        return column;
     }
 
     public void setRow(int rowIndex, int[] row) {
@@ -66,9 +66,15 @@ public class Field {
     }
 
     public void setField(int[][] newCells) {
-        if (newCells.length != sizeOfField || newCells[0].length != sizeOfField) {
+        if (newCells.length != sizeOfField) {
             throw new IllegalArgumentException("Размер нового поля не соответствует размеру текущего поля");
         }
+        Arrays.stream(newCells).forEach(row -> {
+            if (row.length != sizeOfField) {
+                throw new IllegalArgumentException("Размер нового поля не соответствует размеру текущего поля");
+            }
+        });
+
         for (int i = 0; i < sizeOfField; i++) {
             for (int j = 0; j < sizeOfField; j++) {
                 setCell(i, j, newCells[i][j]);

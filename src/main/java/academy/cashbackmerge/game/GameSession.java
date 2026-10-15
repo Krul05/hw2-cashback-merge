@@ -5,9 +5,7 @@ import academy.cashbackmerge.random.CashbackGenerator;
 import java.io.PrintStream;
 import java.util.Objects;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Getter
 public class GameSession {
     private final int movesLimit;
@@ -28,20 +26,16 @@ public class GameSession {
         this.movesLimit = movesLimit;
     }
 
-    public int movesIncrement() {
-        if (isGameOver) {
-            throw new IllegalStateException("Игра окончена. Невозможно сделать ход.");
-        }
+    public void movesIncrement() {
         movesUsed++;
         if (movesUsed >= movesLimit) {
             isGameOver = true;
         }
-        return movesUsed;
     }
 
-    public int addScore(int points) {
+
+    public void addScore(int points) {
         score += points;
-        return score;
     }
 
     public void generateRandomCell() {
