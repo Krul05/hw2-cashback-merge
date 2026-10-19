@@ -29,6 +29,12 @@ public class Field {
         return result;
     }
 
+    public Field copy() {
+        Field copy = new Field(sizeOfField);
+        copy.setField(getCells());
+        return copy;
+    }
+
     public int[] getRow(int rowIndex) {
         checkCoordinates(rowIndex, 0);
         return Arrays.copyOf(cells[rowIndex], sizeOfField);
@@ -45,40 +51,35 @@ public class Field {
 
     public void setRow(int rowIndex, int[] row) {
         checkCoordinates(rowIndex, 0);
-        for (int i = 0; i < sizeOfField; i++) {
-            setCell(rowIndex, i, row[i]);
-        }
+        validateLine(row);
+
+        System.arraycopy(row, 0, cells[rowIndex], 0, sizeOfField);
     }
 
     public void setColumn(int colIndex, int[] column) {
         checkCoordinates(0, colIndex);
+        validateLine(column);
+
         for (int i = 0; i < sizeOfField; i++) {
-            setCell(i, colIndex, column[i]);
+            cells[i][colIndex] = column[i];
         }
     }
 
     public void setCell(int i, int j, int cashback) {
-        if (cashback < 0 || (cashback & (cashback - 1)) != 0) {
-            throw new IllegalArgumentException("Значение плитки должно быть положительной степенью двойки или нулем");
-        }
         checkCoordinates(i, j);
+        validateCashback(cashback);
         cells[i][j] = cashback;
     }
 
     public void setField(int[][] newCells) {
         if (newCells.length != sizeOfField) {
-            throw new IllegalArgumentException("Размер нового поля не соответствует размеру текущего поля");
+            throw new IllegalArgumentException("Некорректный размер поля");
         }
-        Arrays.stream(newCells).forEach(row -> {
-            if (row.length != sizeOfField) {
-                throw new IllegalArgumentException("Размер нового поля не соответствует размеру текущего поля");
-            }
-        });
-
+        for (int[] row : newCells) {
+            validateLine(row);
+        }
         for (int i = 0; i < sizeOfField; i++) {
-            for (int j = 0; j < sizeOfField; j++) {
-                setCell(i, j, newCells[i][j]);
-            }
+            System.arraycopy(newCells[i], 0, cells[i], 0, sizeOfField);
         }
     }
 
@@ -94,7 +95,22 @@ public class Field {
         return emptyCells;
     }
 
-    public void checkCoordinates(int i, int j) {
+    private void validateCashback(int cashback) {
+        if (cashback < 0 || (cashback & (cashback - 1)) != 0) {
+            throw new IllegalArgumentException("Некорректное значение кэшбэка");
+        }
+    }
+
+    private void validateLine(int[] line) {
+        if (line.length != sizeOfField) {
+            throw new IllegalArgumentException("Некорректный размер строки");
+        }
+        for (int cashback : line) {
+            validateCashback(cashback);
+        }
+    }
+
+    private void checkCoordinates(int i, int j) {
         if (i < 0 || i >= sizeOfField || j < 0 || j >= sizeOfField) {
             throw new IndexOutOfBoundsException("Координаты выходят за пределы поля");
         }

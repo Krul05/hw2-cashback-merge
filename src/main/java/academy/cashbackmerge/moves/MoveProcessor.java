@@ -8,35 +8,42 @@ import lombok.experimental.UtilityClass;
 public class MoveProcessor {
 
     public MoveResult processMove(Field field, Move move) {
+        MoveResult result = calculateMove(field, move);
+        if (result.isMoved()) {
+            field.setField(result.field().getCells());
+        }
+        return result;
+    }
+
+    public MoveResult calculateMove(Field field, Move move) {
         int movePoints = 0;
-        int[][] originalCells = field.getCells();
+        Field newField = field.copy();
 
         switch (move) {
             case UP -> {
-                for (int col = 0; col < field.getSizeOfField(); col++) {
-                    movePoints += applyLineProcess(field.getColumn(col), field, false, col, false);
+                for (int col = 0; col < newField.getSizeOfField(); col++) {
+                    movePoints += applyLineProcess(newField.getColumn(col), newField, false, col, false);
                 }
             }
             case DOWN -> {
-                for (int col = 0; col < field.getSizeOfField(); col++) {
-                    movePoints += applyLineProcess(field.getColumn(col), field, true, col, false);
+                for (int col = 0; col < newField.getSizeOfField(); col++) {
+                    movePoints += applyLineProcess(newField.getColumn(col), newField, true, col, false);
                 }
             }
             case LEFT -> {
-                for (int row = 0; row < field.getSizeOfField(); row++) {
-                    movePoints += applyLineProcess(field.getRow(row), field, false, row, true);
+                for (int row = 0; row < newField.getSizeOfField(); row++) {
+                    movePoints += applyLineProcess(newField.getRow(row), newField, false, row, true);
                 }
             }
             case RIGHT -> {
-                for (int row = 0; row < field.getSizeOfField(); row++) {
-                    movePoints += applyLineProcess(field.getRow(row), field, true, row, true);
+                for (int row = 0; row < newField.getSizeOfField(); row++) {
+                    movePoints += applyLineProcess(newField.getRow(row), newField, true, row, true);
                 }
             }
         }
 
-        boolean isMoved = !Arrays.deepEquals(originalCells, field.getCells());
-
-        return new MoveResult(isMoved, movePoints);
+        boolean isMoved = !Arrays.deepEquals(field.getCells(), newField.getCells());
+        return new MoveResult(isMoved, movePoints, newField);
     }
 
     private int applyLineProcess(int[] line, Field field, boolean isReverse, int index, boolean isRow) {
