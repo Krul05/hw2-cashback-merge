@@ -1,16 +1,15 @@
 package academy.cashbackmerge.model;
 
-import academy.cashbackmerge.config.ConfigValidationException;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record GameSettings(
         List<CashbackProbability> spawnRules,
+        List<CashbackReward> rewardTable,
         @JsonAlias("boardSize") int sizeOfField,
         int movesLimit,
         int maxRewardCashback,
