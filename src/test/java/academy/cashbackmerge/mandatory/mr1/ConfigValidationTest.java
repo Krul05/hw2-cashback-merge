@@ -3,6 +3,7 @@ package academy.cashbackmerge.mandatory.mr1;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import academy.cashbackmerge.config.ConfigValidationException;
 import academy.cashbackmerge.config.GameSettingsParser;
 import academy.cashbackmerge.config.StringConfigLoader;
 import org.junit.jupiter.api.DisplayName;
@@ -71,7 +72,7 @@ class ConfigValidationTest {
         assertThatThrownBy(() -> {
                     new GameSettingsParser(new StringConfigLoader(INVALID_CONFIG_PROBABILITIES)).parseSettings();
                 })
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ConfigValidationException.class)
                 .hasMessageContaining("Сумма вероятностей генерации кэшбэка должна быть равна 1.");
     }
 
@@ -81,7 +82,7 @@ class ConfigValidationTest {
         assertThatThrownBy(() -> {
                     new GameSettingsParser(new StringConfigLoader(INVALID_CONFIG_MOVES_LIMIT)).parseSettings();
                 })
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ConfigValidationException.class)
                 .hasMessageContaining("Лимит ходов должен быть положительным числом.");
     }
 
@@ -91,7 +92,7 @@ class ConfigValidationTest {
         assertThatThrownBy(() -> {
                     new GameSettingsParser(new StringConfigLoader(INVALID_CONFIG_EMPTY_SPAWN_RULES)).parseSettings();
                 })
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(ConfigValidationException.class)
                 .hasMessageContaining("Список правил генерации кэшбэка не может быть пустым.");
     }
 }

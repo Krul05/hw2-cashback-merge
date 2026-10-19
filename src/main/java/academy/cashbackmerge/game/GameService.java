@@ -12,7 +12,6 @@ public class GameService {
         for (int i = 0; i < INITIAL_CELLS; i++) {
             cashbackGenerator.generateRandomCashback(field);
         }
-        GameSession gameSession = new GameSession(field, gameSettings.movesLimit());
-        return gameSession;
+        return new GameSession(field, gameSettings.movesLimit(), cashbackGenerator);
     }
 }
