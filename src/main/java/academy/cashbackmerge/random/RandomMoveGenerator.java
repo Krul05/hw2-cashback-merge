@@ -1,6 +1,8 @@
 package academy.cashbackmerge.random;
 
 import academy.cashbackmerge.moves.Move;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class RandomMoveGenerator {
@@ -14,8 +16,11 @@ public class RandomMoveGenerator {
         this.random = new Random(seed);
     }
 
-    public Move generateRandomMove() {
-        int randomIndex = random.nextInt(Move.getSize());
-        return Move.getByOrdinal(randomIndex);
+    public Optional<Move> generateRandomMove(List<Move> moves) {
+        if (moves.isEmpty()) {
+            return Optional.empty();
+        }
+        int randomIndex = random.nextInt(moves.size());
+        return Optional.of(moves.get(randomIndex));
     }
 }

@@ -1,7 +1,9 @@
 package academy.cashbackmerge.moves;
 
 import academy.cashbackmerge.model.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -13,6 +15,18 @@ public class MoveProcessor {
             field.setField(result.field().getCells());
         }
         return result;
+    }
+
+    public static List<Move> getAvailableMoves(Field field) {
+        List<Move> moves = new ArrayList<>();
+
+        for (Move move : Move.values()) {
+            if (calculateMove(field, move).isMoved()) {
+                moves.add(move);
+            }
+        }
+
+        return moves;
     }
 
     public MoveResult calculateMove(Field field, Move move) {
