@@ -11,6 +11,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record GameSettings(
         List<CashbackProbability> spawnRules,
+        List<CashbackReward> rewardTable,
         @JsonAlias("boardSize") int sizeOfField,
         int movesLimit,
         int maxRewardCashback,
@@ -19,6 +20,9 @@ public record GameSettings(
         if (spawnRules != null) {
             spawnRules = List.copyOf(spawnRules);
         }
+        if (rewardTable != null) {
+            rewardTable = List.copyOf(rewardTable);
+        }
     }
 
     public void validate() {
@@ -26,6 +30,7 @@ public record GameSettings(
 
         validateStructures(errors);
         validateSpawnRules(errors);
+        validateRewardTable(errors);
 
         if (!errors.isEmpty()) {
             throw new ConfigValidationException(errors);
@@ -70,6 +75,22 @@ public record GameSettings(
                 || maxRewardAllowedRate.compareTo(BigDecimal.ZERO) < 0
                 || maxRewardAllowedRate.compareTo(BigDecimal.ONE) > 0) {
             errors.add("Допустимая доля количества максимальной награды должна быть от 0 до 1");
+        }
+    }
+
+    private void validateRewardTable(List<String> errors) {
+        if (rewardTable == null || rewardTable.isEmpty()) {
+            errors.add("Таблица наград не может быть пустой.");
+            return;
+        }
+
+        boolean isPowerOfTwoCashback = rewardTable.stream().allMatch(rule -> isPowerOfTwo(rule.cashback()));
+        if (!isPowerOfTwoCashback) {
+            errors.add("Все значения кэшбэка в таблице наград должны быть положительными степенями числа 2.");
+        }
+        boolean hasNonNegativeRewards = rewardTable.stream().allMatch(rule -> rule.reward() >= 0);
+        if (!hasNonNegativeRewards) {
+            errors.add("Все значения наград в таблице наград должны быть неотрицательными.");
         }
     }
 

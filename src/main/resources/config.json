@@ -6,5 +6,12 @@
   "sizeOfField": 4,
   "movesLimit": 40,
   "maxRewardCashback": "32",
-  "maxRewardAllowedRate": "0.20"
+  "maxRewardAllowedRate": "0.20",
+  "rewardTable": [
+    { "cashback": "2",  "reward": "0" },
+    { "cashback": "4",  "reward": "50" },
+    { "cashback": "8",  "reward": "150" },
+    { "cashback": "16", "reward": "500" },
+    { "cashback": "32", "reward": "2000" }
+  ]
 }

@@ -22,7 +22,14 @@ class ConfigValidationTest {
           "sizeOfField": 4,
           "movesLimit": 40,
           "maxRewardCashback": "32",
-          "maxRewardAllowedRate": "0.20"
+          "maxRewardAllowedRate": "0.20",
+          "rewardTable": [
+              { "cashback": "2",  "reward": "0" },
+              { "cashback": "4",  "reward": "50" },
+              { "cashback": "8",  "reward": "150" },
+              { "cashback": "16", "reward": "500" },
+              { "cashback": "32", "reward": "2000" }
+            ]
         }
         """;
     private static final String INVALID_CONFIG_PROBABILITIES = """
@@ -34,7 +41,14 @@ class ConfigValidationTest {
           "sizeOfField": 4,
           "movesLimit": 40,
           "maxRewardCashback": "32",
-          "maxRewardAllowedRate": "0.20"
+          "maxRewardAllowedRate": "0.20",
+          "rewardTable": [
+              { "cashback": "2",  "reward": "0" },
+              { "cashback": "4",  "reward": "50" },
+              { "cashback": "8",  "reward": "150" },
+              { "cashback": "16", "reward": "500" },
+              { "cashback": "32", "reward": "2000" }
+            ]
         }
         """;
     private static final String INVALID_CONFIG_MOVES_LIMIT = """
@@ -46,7 +60,14 @@ class ConfigValidationTest {
           "sizeOfField": 4,
           "movesLimit": 0,
           "maxRewardCashback": "32",
-          "maxRewardAllowedRate": "0.20"
+          "maxRewardAllowedRate": "0.20",
+          "rewardTable": [
+              { "cashback": "2",  "reward": "0" },
+              { "cashback": "4",  "reward": "50" },
+              { "cashback": "8",  "reward": "150" },
+              { "cashback": "16", "reward": "500" },
+              { "cashback": "32", "reward": "2000" }
+            ]
         }
         """;
     private static final String INVALID_CONFIG_EMPTY_SPAWN_RULES = """
@@ -55,7 +76,14 @@ class ConfigValidationTest {
           "sizeOfField": 4,
           "movesLimit": 40,
           "maxRewardCashback": "32",
-          "maxRewardAllowedRate": "0.20"
+          "maxRewardAllowedRate": "0.20",
+          "rewardTable": [
+              { "cashback": "2",  "reward": "0" },
+              { "cashback": "4",  "reward": "50" },
+              { "cashback": "8",  "reward": "150" },
+              { "cashback": "16", "reward": "500" },
+              { "cashback": "32", "reward": "2000" }
+            ]
         }
         """;
 
